@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+       <title>Unit 4 Game </unit-4-game></title>
+       <!-- LINKS TO VARIOUS DOCUMENTS -->
+            <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+            <link rel="stylesheet" type="text/css" href="assets/css/style.css"> 
+    </head>
+    <body onLoad="startTimer()">
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Trivia Game</h1>
+                <p>~~~~inset discription~~~~</p>
+            </div>
+            <div class="panel panel-default" id="counterSpace">
+                <div class="panel-heading">
+                    Time Remaining:  <span id="timeSpace"></span>
+                </div>
+            </div>
+            <div class="panel panel-default" id="questionDisplay">
+                <div class="panel-heading">
+                    <span id="questionSpace"></span>
+                </div>
+                <div class="panel-body" id="options">
+                    <div id="optionOne"><button id="line1"></button><span id="opt1"></span></div>
+                    <div id="optionTwo"><button id="line2"></button><span id="opt2"></span></div>
+                    <div id="optionThree"><button id="line3"></button><span id="opt3"></span></div>
+                    <div id="optionFour"><button id="line4"></button><span id="opt4"></span></div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
+</html>
