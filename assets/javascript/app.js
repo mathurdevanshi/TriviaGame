@@ -1,5 +1,5 @@
 ///////////////////////////////////////VARIABLES////////////////////////////////////
-var timerlength=6;
+var timerlength=30;
 var counter=timerlength; 
 var counter2;
 var timerId;
@@ -15,57 +15,133 @@ var triviaArray = [
     {
         question:"Which dictator worked once as an assistant librarian in a university library?",
         option1:{
-            option: "Lyndon B. Johnson",
-            type: true,
+            option: "Benito Mussolini",
+            type: false,
         },
         option2:{
-            option: "Harry Potter",
+            option: "Kim Jong-Un",
             type: false,
         },
         option3:{
-            option: "Some dictator",
+            option: "Mao Zedong",
             type: true,
         },
         option4:{
-            option: "I dunno",
+            option: "Nicolas Maduro",
             type: false,
         }
     },
     {
-        question:"Something something question 2",
+        question:"This librarian worked at the Library of Congress before becoming an influential people in the US in the 1950’s and 60’s.",
         option1:{
-            option: "We changing shit",
-            type: false,
-        },
-        option2:{
-            option: "Mike Shubert",
+            option: "J. Edgar Hoover",
             type: true,
         },
+        option2:{
+            option: "Elvis Presley",
+            type: false,
+        },
         option3:{
-            option: "Potterless",
+            option: "Nelson Mandela",
             type: false,
         },
         option4:{
-            option: "phsssss",
+            option: "Martin Luther King Jr.",
             type: false,
         }
     },
     {
-        question:"We on question 3",
+        question:"Which superhero works as a librarian during the day?",
         option1:{
-            option: "what's cooking good lookin'",
+            option: "Hit Girl",
             type: false,
         },
         option2:{
-            option: "hello sunshine",
+            option: "Vixen",
             type: false,
         },
         option3:{
-            option: "lemons and lillies and donuts and kittens",
+            option: "Shuri",
             type: false,
         },
         option4:{
-            option: ":P",
+            option: "Batgirl",
+            type: true,
+        }
+    },
+    {
+        question:"Who formed the first public lending library in America? ",
+        option1:{
+            option: "Thomas Jefferson",
+            type: false,
+        },
+        option2:{
+            option: "Benjamin Franklin",
+            type: true,
+        },
+        option3:{
+            option: "John Jay",
+            type: false,
+        },
+        option4:{
+            option: "James Madison",
+            type: false,
+        }
+    },
+    {
+        question:"What is the world’s largest over due library book fine that got paid?",
+        option1:{
+            option: "$345.14",
+            type: true,
+        },
+        option2:{
+            option: "$153.45",
+            type: false,
+        },
+        option3:{
+            option: "$98.08",
+            type: false,
+        },
+        option4:{
+            option: "$100,000,000,000.10",
+            type: false,
+        }
+    },
+    {
+        question:"Last checked in 2000, which has been the most stolen book from libraries? ",
+        option1:{
+            option: "The Bible",
+            type: false,
+        },
+        option2:{
+            option: "Guinness World Records",
+            type: true,
+        },
+        option3:{
+            option: "Webster Dictionary",
+            type: false,
+        },
+        option4:{
+            option: "Harry Potter and the Sorcerer's Stone",
+            type: false,
+        }
+    },
+    {
+        question:"Where can you find a book bound in human skin?",
+        option1:{
+            option: "Florence National Central Library",
+            type: false,
+        },
+        option2:{
+            option: "Library of Congress",
+            type: false,
+        },
+        option3:{
+            option: "National Library of Russia",
+            type: false,
+        },
+        option4:{
+            option: "Harvard University Library",
             type: true,
         }
     }
@@ -125,7 +201,6 @@ function recordTimer(){
 //-----------------------------------------------------------------------------------  now working with clicking   
 $("button").click(recordAnswer);
 function recordAnswer(){
-    console.log("Correct", correct);
     lineId=$(this).attr("id");
     switch(lineId){
         case 'line1':
@@ -197,7 +272,7 @@ function screenChangeCorrect(){
     $(".panel-heading").hide();
     var divOne=document.createElement("div");
         divOne.id="responsetoResponse";
-        divOne.innerHTML="<h1><b>YOU GOT IT CORRECT</b></h1>";
+        divOne.innerHTML="<h1><b>You got it right! Look at you smarty-pants!</b></h1>";
     var questionDisplay=document.getElementById("questionDisplay");
         questionDisplay.appendChild(divOne);
 }
@@ -227,7 +302,7 @@ function screenChangeIncorrect(){
      $(".panel-heading").hide();
      var divOne=document.createElement("div");
          divOne.id="responsetoResponse";
-         divOne.innerHTML="<h1><b>YOUR RESPONSE IS WRONG</b></h1>";
+         divOne.innerHTML="<h1><b>You got this question wrong, but no worries. Who would know this anyways?</b></h1>";
      var questionDisplay=document.getElementById("questionDisplay");
          questionDisplay.appendChild(divOne);
 }
@@ -240,7 +315,7 @@ function screeChangeEndGame(){
     $(".panel-heading").hide();
     var divOne=document.createElement("div");
         divOne.id="responsetoResponse";
-        divOne.innerHTML="<h1><b>YOU FINISHED THE TRIVIA GAME</b></h1>";
+        divOne.innerHTML="<h1><b>YOU FINISHED THE TRIVIA GAME!!</b></h1>";
     var questionDisplay=document.getElementById("questionDisplay");
         questionDisplay.appendChild(divOne);
 
