@@ -1,15 +1,17 @@
 ///////////////////////////////////////VARIABLES////////////////////////////////////
 var timerlength=8;
 var counter=timerlength; 
+var counter2;
 var timerId;
+var timerId2;
 var questionArrayPointer=0;
 var buttonId;
 var lineId;
-var correct=0;
-var wrong=0;
+var correct;
+var wrong;
 
 ///////////////////////////////////////ARRAYS///////////////////////////////////////
-var question = [
+var triviaArray = [
     {
         question:"Which dictator worked once as an assistant librarian in a university library?",
         option1:{
@@ -68,26 +70,25 @@ var question = [
         }
     }
 ]
-
 ///////////////////////////////////////FUNCTIONS////////////////////////////////////
-//----------------------------------------------------------------------------------  just some routine testings
+//-----------------------------------------------------------------------------------  just some routine testings
 
 //-----------------------------------------------------------------------------------  getting timer to work
 function startTimer(){
     $("#questionSpace").empty();
-    $("#questionSpace").append(question[questionArrayPointer].question);
+    $("#questionSpace").append(triviaArray[questionArrayPointer].question);
 
     $("#opt1").empty();
-    $("#opt1").append(question[questionArrayPointer].option1.option);
+    $("#opt1").append(triviaArray[questionArrayPointer].option1.option);
 
     $("#opt2").empty();
-    $("#opt2").append(question[questionArrayPointer].option2.option);
+    $("#opt2").append(triviaArray[questionArrayPointer].option2.option);
 
     $("#opt3").empty();
-    $("#opt3").append(question[questionArrayPointer].option3.option);
+    $("#opt3").append(triviaArray[questionArrayPointer].option3.option);
 
     $("#opt4").empty();
-    $("#opt4").append(question[questionArrayPointer].option4.option);
+    $("#opt4").append(triviaArray[questionArrayPointer].option4.option);
 
     timerId = setInterval("recordTimer()", 1000);
 }
@@ -98,68 +99,151 @@ function recordTimer(){
     counter--;
     if (counter==0){
         questionArrayPointer++;
-
+            if (questionArrayPointer==(triviaArray.length)){
+                screeChangeEndGame();
+            } 
         $("#questionSpace").empty();
-        $("#questionSpace").append(question[questionArrayPointer].question);
+        $("#questionSpace").append(triviaArray[questionArrayPointer].question);
 
         $("#opt1").empty();
-        $("#opt1").append(question[questionArrayPointer].option1.option);
+        $("#opt1").append(triviaArray[questionArrayPointer].option1.option);
 
         $("#opt2").empty();
-        $("#opt2").append(question[questionArrayPointer].option2.option);
+        $("#opt2").append(triviaArray[questionArrayPointer].option2.option);
 
         $("#opt3").empty();
-        $("#opt3").append(question[questionArrayPointer].option3.option);
+        $("#opt3").append(triviaArray[questionArrayPointer].option3.option);
 
         $("#opt4").empty();
-        $("#opt4").append(question[questionArrayPointer].option4.option);
-
+        $("#opt4").append(triviaArray[questionArrayPointer].option4.option);
+    
         counter=timerlength;
     }
-    if (questionArrayPointer==(question.length)){
-        questionArrayPointer=0;
-    } 
+    if(questionArrayPointer==(triviaArray.length)){
+        screeChangeEndGame();
+    }
 }
 //-----------------------------------------------------------------------------------  now working with clicking   
 $("button").click(recordAnswer);
 function recordAnswer(){
     lineId=$(this).attr("id");
-    console.log("questionArrayPointer", questionArrayPointer);
     switch(lineId){
         case 'line1':
-            if (question[questionArrayPointer].option1.type==true){
-                console.log("CORRECT", question[questionArrayPointer].option1.type);
+            if (triviaArray[questionArrayPointer].option1.type==true){
+                correct++;
+                screenChangeCorrect();
             }
             else {
-                console.log("INCORRECT");
+                wrong++;
+                screenChangeIncorrect();
             };
             break;
         case 'line2':
-            if (question[questionArrayPointer].option2.type==true){
-                console.log("CORRECT", question[questionArrayPointer].option2.type);
+            if (triviaArray[questionArrayPointer].option2.type==true){
+                correct++;
+                screenChangeCorrect();
             }
             else {
-                console.log("INCORRECT");
+                wrong++;
+                screenChangeIncorrect();
             }
             break;
         case 'line3':
-            if (question[questionArrayPointer].option3.type==true){
-                console.log("CORRECT", question[questionArrayPointer].option3.type);
+            if (triviaArray[questionArrayPointer].option3.type==true){
+                correct++;
+                screenChangeCorrect();
             }
             else {
-                console.log("INCORRECT");
+                wrong++;
+                screenChangeIncorrect();;
             }
             break;
         case 'line4':
-            if (question[questionArrayPointer].option4.type==true){
-                console.log("CORRECT", question[questionArrayPointer].option4.type);
+            if (triviaArray[questionArrayPointer].option4.type==true){
+                correct++;
+                screenChangeCorrect();
             }
             else {
-                console.log("INCORRECT");
+                wrong++;
+                screenChangeIncorrect();
             }
             break;
     }
 }
-    
-   
-
+//-----------------------------------------------------------------------------------  dealing with changing screens 
+function screenChangeCorrect(){
+    //dealing with timer:
+    clearInterval(timerId);
+    counter2=3;
+    timerId2 = setInterval(
+        function(){
+            counter2--;
+            if (counter2==0){
+                counter=timerlength;
+                questionArrayPointer++;
+                document.getElementById("timeSpace").innerHTML=counter;
+                $("#options").show();
+                $(".panel-heading").show();
+                clearInterval(timerId2);
+                $("#responsetoResponse").remove();
+                if(questionArrayPointer==(triviaArray.length)){
+                    screeChangeEndGame();
+                }
+                startTimer();
+            }
+        },1000);
+    //dealing with text:
+    $("#options").hide();
+    $(".panel-heading").hide();
+    var divOne=document.createElement("div");
+        divOne.id="responsetoResponse";
+        divOne.innerHTML="<h1><b>YOU GOT IT CORRECT</b></h1>";
+    var questionDisplay=document.getElementById("questionDisplay");
+        questionDisplay.appendChild(divOne);
+    //getting to next question 
+}
+function screenChangeIncorrect(){
+     //dealing with timer:
+     clearInterval(timerId);
+     counter2=3;
+     timerId2 = setInterval(
+         function(){
+             counter2--;
+             if (counter2==0){
+                 counter=timerlength;
+                 questionArrayPointer++;
+                 document.getElementById("timeSpace").innerHTML=counter;
+                 $("#options").show();
+                 $(".panel-heading").show();
+                 clearInterval(timerId2);
+                 $("#responsetoResponse").remove();
+                 if(questionArrayPointer==(triviaArray.length)){
+                    screeChangeEndGame();
+                 }
+                 startTimer();
+             }
+         },1000);
+     //dealing with text:
+     $("#options").hide();
+     $(".panel-heading").hide();
+     var divOne=document.createElement("div");
+         divOne.id="responsetoResponse";
+         divOne.innerHTML="<h1><b>YOUR RESPONSE IS WRONG</b></h1>";
+     var questionDisplay=document.getElementById("questionDisplay");
+         questionDisplay.appendChild(divOne);
+     //getting to next question 
+}
+function screeChangeEndGame(){
+    //dealing with timer:
+    clearInterval(timerId);
+    clearInterval(timerId2);
+    //dealing with text:
+    $("#options").hide();
+    $(".panel-heading").hide();
+    var divOne=document.createElement("div");
+        divOne.id="responsetoResponse";
+        divOne.innerHTML="<h1><b>YOU GOT TO THE END, LAST SCREEN</b></h1>";
+    var questionDisplay=document.getElementById("questionDisplay");
+        questionDisplay.appendChild(divOne);
+    //getting to next question 
+}
