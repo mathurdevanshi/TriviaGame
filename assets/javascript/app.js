@@ -1,5 +1,5 @@
 ///////////////////////////////////////VARIABLES////////////////////////////////////
-var timerlength=8;
+var timerlength=6;
 var counter=timerlength; 
 var counter2;
 var timerId;
@@ -7,8 +7,8 @@ var timerId2;
 var questionArrayPointer=0;
 var buttonId;
 var lineId;
-var correct;
-var wrong;
+var correct=0;
+var wrong=0;
 
 ///////////////////////////////////////ARRAYS///////////////////////////////////////
 var triviaArray = [
@@ -94,14 +94,13 @@ function startTimer(){
 }
 //-----------------------------------------------------------------------------------  getting text to change w/ time
 function recordTimer(){
-    console.log("questionArrayPointer in recordTimer", questionArrayPointer);
     document.getElementById("timeSpace").innerHTML=counter;
     counter--;
     if (counter==0){
         questionArrayPointer++;
             if (questionArrayPointer==(triviaArray.length)){
                 screeChangeEndGame();
-            } 
+            }
         $("#questionSpace").empty();
         $("#questionSpace").append(triviaArray[questionArrayPointer].question);
 
@@ -118,14 +117,15 @@ function recordTimer(){
         $("#opt4").append(triviaArray[questionArrayPointer].option4.option);
     
         counter=timerlength;
-    }
+    };
     if(questionArrayPointer==(triviaArray.length)){
         screeChangeEndGame();
-    }
+    };
 }
 //-----------------------------------------------------------------------------------  now working with clicking   
 $("button").click(recordAnswer);
 function recordAnswer(){
+    console.log("Correct", correct);
     lineId=$(this).attr("id");
     switch(lineId){
         case 'line1':
@@ -189,7 +189,7 @@ function screenChangeCorrect(){
                 if(questionArrayPointer==(triviaArray.length)){
                     screeChangeEndGame();
                 }
-                startTimer();
+                else{startTimer();}
             }
         },1000);
     //dealing with text:
@@ -200,7 +200,6 @@ function screenChangeCorrect(){
         divOne.innerHTML="<h1><b>YOU GOT IT CORRECT</b></h1>";
     var questionDisplay=document.getElementById("questionDisplay");
         questionDisplay.appendChild(divOne);
-    //getting to next question 
 }
 function screenChangeIncorrect(){
      //dealing with timer:
@@ -220,7 +219,7 @@ function screenChangeIncorrect(){
                  if(questionArrayPointer==(triviaArray.length)){
                     screeChangeEndGame();
                  }
-                 startTimer();
+                 else{startTimer();};
              }
          },1000);
      //dealing with text:
@@ -231,7 +230,6 @@ function screenChangeIncorrect(){
          divOne.innerHTML="<h1><b>YOUR RESPONSE IS WRONG</b></h1>";
      var questionDisplay=document.getElementById("questionDisplay");
          questionDisplay.appendChild(divOne);
-     //getting to next question 
 }
 function screeChangeEndGame(){
     //dealing with timer:
@@ -242,8 +240,21 @@ function screeChangeEndGame(){
     $(".panel-heading").hide();
     var divOne=document.createElement("div");
         divOne.id="responsetoResponse";
-        divOne.innerHTML="<h1><b>YOU GOT TO THE END, LAST SCREEN</b></h1>";
+        divOne.innerHTML="<h1><b>YOU FINISHED THE TRIVIA GAME</b></h1>";
     var questionDisplay=document.getElementById("questionDisplay");
         questionDisplay.appendChild(divOne);
-    //getting to next question 
+
+    var divTwo=document.createElement("div");
+        divTwo.id="scorecard";
+        divTwo.innerHTML='<b>Correct Responses: <span id=CorrectScoreHere></span></b>';
+    var questionDisplay=document.getElementById("questionDisplay");
+        questionDisplay.appendChild(divTwo);
+    document.getElementById("CorrectScoreHere").innerHTML=correct;
+
+    var divThree=document.createElement("div");
+        divThree.id="scorecard";
+        divThree.innerHTML='<b>Incorrect Responses: <span id=IncorrectScoreHere></span></b>';
+    var questionDisplay=document.getElementById("questionDisplay");
+        questionDisplay.appendChild(divThree);
+    document.getElementById("IncorrectScoreHere").innerHTML=wrong;    
 }
